@@ -13,6 +13,6 @@ Use :Git to show the commands on menu to select and launch a commands non requir
 When using a parameter, search all commands and show matching strings.
 By instance: :Git merge to show all commands matching merge screen
 
-It is advisable to install hi.vim (https://www.vim.org/scripts/script.php?script_id=5887) to display results colorized.
+It is advisable to install hi.vim (https://github.com/javipv/hi.vim) to display results colorized.
 
 Previously on https://www.vim.org/scripts/script.php?script_id=6013
