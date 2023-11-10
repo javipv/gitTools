@@ -266,16 +266,31 @@ function! s:CommitDescriptionFile(descFile, options)
         return
     endif
 
+    let cmd = g:gitTools_commitDescFileCmd." ".a:options
+    echom l:cmd
     echom "Committing..."
-    call system(g:gitTools_commitDescFileCmd." ".a:options)
+    let result = system(l:cmd)
+
+    if l:result != ""
+        let l:textList = []
+        let l:textList += [ " [gitTools.vim] ".l:cmd ]
+        let l:text = gitTools#tools#EncloseOnRectangle(l:textList, "bold", "")
+        silent new
+        normal ggO
+        put=l:text
+        put=l:result
+        normal ggdd
+    endif
 
     call delete(a:descFile)
     echom "Commited"
 
     if l:closeBuffOnExit == 1 | silent quit! | endif
 
-    if confirm("Show git log?", "&yes\n&no", 1) == 1
-        call gitTools#log#GetHistory("")
+    if l:result == ""
+        if confirm("Show git log?", "&yes\n&no", 1) == 1
+            call gitTools#log#GetHistory("")
+        endif
     endif
 endfunction
 
