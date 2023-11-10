@@ -12,115 +12,6 @@
 " NOTES:
 "
 
-" OBSOLET:
-" Show on a new window the git status lines matching the selected filter
-" pattern.
-" Arg1: path, file or path to check with git status
-" Arg2: git commmand options (-uno --branch --show-stash...).
-" Commands: Gitst, Gitsta, Gitstf, Gitstd.
-function! gitTools#status#GetStatus0(path, options)
-    let l:res = gitTools#tools#isGitAvailable()
-    if l:res != 1
-        call gitTools#tools#Error("ERROR: ".l:res)
-        return
-    endif
-
-    "if getline(2) =~ "gitTools.vim" && getline(2) =~ "git status"
-    if expand("%s") =~ "_gitStatus___" && getline(2) =~ "gitTools.vim" && getline(2) =~ "git status"
-        let l:onStatusWindow = 1
-    else
-        let l:onStatusWindow = 0
-    endif
-
-    let l:gitCmd  = g:gitTools_gitCmd
-    let l:gitCmd .= gitTools#tools#CheckGitUserAndPsswd()
-    let l:gitOptions = "-u --branch --show-stash ".a:options
-
-    let command  = l:gitCmd." status ".l:gitOptions." ".a:path 
-    let callback = ["gitTools#status#GetStatusEnd", l:command]
-
-    if l:onStatusWindow == 1
-        " Current buffer already shows git status
-        let w:winSize = winheight(0)
-        let w:split = 4
-        let l:sameWindow = 1
-    else
-        let l:sameWindow = 0
-        call gitTools#tools#WindowSplitMenu(1)
-    endif
-
-    call gitTools#tools#WindowSplit()
-    silent exec("r! ".l:command)
-
-    " Add header on top
-    let l:textList = []
-    let l:textList += [ " [gitTools.vim]" ]
-    let l:textList += [ " git status ".a:path."" ]
-    let l:textList += [ " ==========================================================" ]
-    let l:textList += [ " Available commands:" ]
-    let l:textList += [ " Place cursor on line showing git file's status then:" ]
-    let l:textList += [ " - Use :Gita to add to the staging area." ]
-    let l:textList += [ " - Use :Gitu to remove from staging area." ]
-    let l:textList += [ " - Use :GitR to restore discarding the changes." ]
-    let l:textList += [ " - Use :Gitrm to remove from repository." ]
-    let l:textList += [ " - Use :Gitmv to change the path." ]
-    let l:textList += [ " - Use :GitRM to remove from disk." ]
-    let l:text = gitTools#tools#EncloseOnRectangle(l:textList, "bold", "")
-    normal ggO
-    put=l:text
-    normal ggdd
-
-    " Resize window to fit content.
-    call gitTools#tools#WindowSplitEnd()
-    redraw
-
-    " Apply color highlighting:
-    if l:sameWindow != 1
-        if a:options =~ "s"
-            call s:ApplyShortStatusColorHighlighting()
-        else
-            call s:ApplyStatusColorHighlighting()
-        endif
-    else
-        if exists('g:HiLoaded')
-            silent! call hi#hi#Refresh()  
-        endif
-    endif
-
-    " Rename window
-    let l:flatpath = gitTools#tools#GetPathAsFilename(a:path)
-    if l:flatpath != ""
-        let l:flatpath = "__".l:flatpath
-    endif
-
-    "let l:currentBranch = gitTools#info#GetCurrentBranch()
-    let l:currentBranch = gitTools#branch#Current()
-
-    let l:date = strftime("%y%m%d_%H%M")
-    let l:filename = "_".l:date."_gitStatus___".l:currentBranch.l:flatpath.".txt"
-
-    silent exec("0file")
-    silent! exec("file ".l:filename)
-    setlocal bt=nofile
-
-    " Check for merge files to be deleted
-    let l:n = 0
-    " search(pattern, W:do not wrap to the start, 0:end line not set, 2000:2sec timeout).
-    let l:searchList = [ "_BACKUP_", "_LOCAL_", "_BASE_", "_REMOTE_" ]
-    for l:search in l:searchList
-        normal gg
-        while search(l:search, 'W', 0, 2000) != 0
-            let l:n += 1
-        endwhile
-    endfor
-    normal gg
-
-    if l:n != 0
-        call gitTools#tools#Warn("ATTENTTION: ".l:n." merge files found! (Use :Gitmrm to delete them).")
-    endif
-endfunction
-
-
 " Show on a new window the git status lines matching the selected filter
 " pattern.
 " Arg1: path, file or path to check with git status
@@ -133,7 +24,7 @@ function! gitTools#status#GetStatus(path, options)
         return
     endif
 
-    let l:gitCmd  = g:gitTools_gitCmd
+    let l:gitCmd  = "LC_ALL=C ".g:gitTools_gitCmd
     let l:gitCmd .= gitTools#tools#CheckGitUserAndPsswd()
     let l:gitOptions = "-u --branch --show-stash ".a:options
 
