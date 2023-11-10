@@ -269,21 +269,21 @@ function! s:CommitDescriptionFile(descFile, options)
     let cmd = g:gitTools_commitDescFileCmd." ".a:options
     echom l:cmd
     echom "Committing..."
-    let result = system(l:cmd)
+    silent let result = system(l:cmd)
 
     if l:result != ""
         let l:textList = []
         let l:textList += [ " [gitTools.vim] ".l:cmd ]
         let l:text = gitTools#tools#EncloseOnRectangle(l:textList, "bold", "")
         silent new
-        normal ggO
-        put=l:text
-        put=l:result
-        normal ggdd
+        silent normal ggO
+        silent put=l:text
+        silent put=l:result
+        silent normal ggdd
+        silent wincmd J
     endif
 
     call delete(a:descFile)
-    echom "Commited"
 
     if l:closeBuffOnExit == 1 | silent quit! | endif
 
