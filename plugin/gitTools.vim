@@ -355,6 +355,7 @@ command! -nargs=?  Gitrso                             call gitTools#remote#ShowO
 command! -nargs=?  Gitrb                              call gitTools#remote#GetBranches("<args>")
 command! -nargs=?  Gitro                              call gitTools#remote#Origin("", "<args>")
 command! -nargs=?  Gitrov                             call gitTools#remote#Origin("-v", "<args>")
+command! -nargs=?  Gitrls                             call gitTools#remote#LsBranches("<args>")
 
 " GIT MERGE: 
 command! -nargs=0  Gitmb                              call gitTools#merge#LocalBranch("")

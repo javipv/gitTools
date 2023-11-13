@@ -859,3 +859,112 @@ function! gitTools#remote#GetBranchCallback(cmd, filters, output)
     endif
 endfunction
 
+
+
+" Perform git ls-remote 
+" Arg1: [remote], remote name, if empty open a menu to select the remote.
+" Cmd: Gitrls
+function! gitTools#remote#LsBranches(remote)
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
+    if a:remote == ""
+        let remotesStr = system("git remote") 
+        let remotesList = split(l:remotesStr, "\n")
+
+        if len(l:remotesList) > 1
+            " Open menu window to choose the remote.
+            let l:callback = "gitTools#remote#LsBranchesWithRemote"
+            let l:header = [ "[gitTools] Git remote ls. Select remote branch: (press enter to skip) " ]
+
+            call gitTools#menu#AddCommentLineColor("#", "b*")
+            call gitTools#menu#OpenMenu(l:header, l:remotesList, l:callback, "")
+            return
+        else
+            " Only one remote found. Show remote branches.
+            call gitTools#remote#LsBranchesWithRemote(l:remotesList[0])
+        endif
+    else
+        " Show remote branches.
+        call gitTools#remote#LsBranchesWithRemote(a:remote)
+    endif
+endfunction
+
+
+function! gitTools#remote#LsBranchesWithRemote(remote)
+    let l:cmd = g:gitTools_gitCmd." ls-remote ".a:remote
+    echo l:cmd
+    call gitTools#tools#WindowSplitMenu(1)
+
+    " Lauch command on background with Jobs.vim plugin.
+    let l:callback = [ "gitTools#remote#LsBranchesResult", l:cmd, a:remote ]
+    call gitTools#tools#SystemCmd(l:cmd, l:callback, 1)
+endfunction
+
+
+function! gitTools#remote#LsBranchesResult(cmd, remote, output)
+    if !exists('a:output')
+        redraw
+        call gitTools#tools#Warn("[gitTools.vim] Git result not found. ".a:cmd)
+    endif
+
+    if empty(glob(a:output)) 
+        redraw
+        call gitTools#tools#Warn("[gitTools.vim] Git result empty. ".a:cmd)
+    endif
+
+    let fileList = readfile(a:output)
+
+    if len(l:fileList) >= 1
+        if l:fileList[0]  =~ "fatal: not a git repository"
+            redraw
+            call gitTools#tools#Error("[gitTools.vim] ERROR: not a git repository")
+            return
+        endif
+    endif
+
+    redraw
+    call gitTools#tools#WindowSplit()
+    call gitTools#tools#WindowSplitEnd()
+
+    " Open result file
+    silent exec "edit ".a:output
+
+    "echom "Lines1: '".getline(".")."' Lines:".line("$")
+    if getline(".") == "" && line("$") == 1
+        quit
+        redraw
+        call gitTools#tools#Warn("[gitTools.vim] No result found (".a:cmd.")")
+        return
+    endif
+
+    redraw
+    echo "[gitTools.vim] Found ".line("$")." remotes branches"
+
+    " Rename buffer
+    let l:date = strftime("%y%m%d_%H%M")
+    let l:name = "_".l:date."_gitBranchLsRemote_".a:remote
+
+    silent! exec("0file")
+    silent! exec("bd! ".l:name)
+    silent! exec("file! ".l:name)
+
+    " Add header
+    let l:list = [ " [gitTools.vim] ".a:cmd." " ]
+    let l:header = gitTools#tools#EncloseOnRectangle(l:list, "bold", "")
+    normal gg
+    silent put=l:header
+    normal ggdd3jp
+
+    " Set buffer parameters
+    setl noswapfile
+    setl nomodifiable
+    setl buflisted
+    setl bufhidden=delete
+    setl buftype=nofile
+    setl nonu
+endfunction
+
