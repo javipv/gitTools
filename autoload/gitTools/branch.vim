@@ -78,7 +78,13 @@ endfunction
 " Cmd: Gitbmv, GitBmv
 function! gitTools#branch#Rename()
     "echo "[gitTools.vim] Rename branch: "
-    "
+
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
     let l:branchList =  gitTools#branch#GetBranchList("NoOrigin")
     if l:branchList == [] | return | endif
 
@@ -140,7 +146,12 @@ endfunction
 " Switch to another branch.
 " Cmd: Gitsw
 function! gitTools#branch#Switch()
-    "let l:thisBranch =  gitTools#info#GetCurrentBranch()
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
     let l:thisBranch =  gitTools#branch#Current()
     if l:thisBranch == "" | return | endif
 
@@ -234,6 +245,12 @@ endfunction
 " Show all available branches:
 " Cmd: Gitb
 function! gitTools#branch#Branch(options)
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
     let cmd = g:gitTools_gitCmd." branch ".a:options
     echo l:cmd
     let text = system(l:cmd)
@@ -251,6 +268,7 @@ function! gitTools#branch#Branch(options)
     endif
 
     let l:branchList = []
+    let l:branchDflt = ""
 
     for branch in split(l:text, "\n")
         if l:branch[0] == "*"
@@ -275,8 +293,9 @@ function! gitTools#branch#Branch(options)
 endfunction
 
 function! gitTools#branch#SelectBranchName(branch)
-    let @" = a:branch
-    echo "[gitTools.vim] Branch name copied to default buffer (".a:branch.")."
+    let l:list = split(a:branch)
+    let @" = l:list[0]
+    echo "[gitTools.vim] Branch name copied to default buffer (".l:list[0].")."
 endfunction
 
 
@@ -287,6 +306,12 @@ endfunction
 " Delete branch:
 " Cmd: Gitbd
 function! gitTools#branch#Delete()
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
     let l:branchList =  gitTools#branch#GetBranchList("NoOrigin,NoDefault")
     if l:branchList == [] | return | endif
 

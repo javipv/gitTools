@@ -860,6 +860,9 @@ function! gitTools#remote#GetBranchCallback(cmd, filters, output)
 endfunction
 
 
+"=================================================================================
+" LS-REMOTE
+"=================================================================================
 
 " Perform git ls-remote 
 " Arg1: [remote], remote name, if empty open a menu to select the remote.

@@ -282,7 +282,7 @@ function! gitTools#menu#Select()
     let l:pos = line(".") - s:GitToolsHeaderLines - 1
 
     let l:text = s:GitToolsMenuList[l:pos]
-    "let l:text = l:text[]
+    let l:text = substitute(l:text, "\"", "\\\"", "g")
 
     for l:list in s:GitToolsMenuCommentsList
         if l:text =~ l:list[0]
@@ -301,7 +301,7 @@ function! gitTools#menu#Select()
     silent call gitTools#menu#UnmapKeysAndQuit()
 
     "echom "gitTools#menu#Select() call ".l:callback."(\"".l:text."\")"
-    exec("call ".l:callback."(\"".l:text."\")")
+    exec("call ".l:callback."('".l:text."')")
 endfunction
 
 
