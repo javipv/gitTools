@@ -186,7 +186,8 @@ function! gitTools#help#Help()
     let l:text .= "    :GitRM [FILEPATH]     : Remove from disk.\n"
     let l:text .= "\n"
     let l:text .= "- Log:\n"
-    let l:text .= "    :Gitl [PATH/OPTIONS]  : show git log.\n"
+    let l:text .= "    :Gitl [OPTIONS]       : show git log.\n"
+    let l:text .= "    :Gitl                 : show git log with options oneline and decorate full.\n"
     let l:text .= "    :Gitlf                : show git log for current file.\n"
     let l:text .= "    :Gitlfd               : show git log and diff for current file.\n"
     let l:text .= "    :Gitlp                : show git log and patch for the last 10 commits.\n"
@@ -194,7 +195,7 @@ function! gitTools#help#Help()
     let l:text .= "    :Gitls STRING         : show git log changing string.\n"
     let l:text .= "    :GitlS PATTERN [OPT]  : show git log entries matching search pattern.\n"
     let l:text .= "    :Gitlg [OPTIONS]      : show git log graph.\n"
-    let l:text .= "    :Gitlgo               : show git log graph, decorate oneline.\n"
+    let l:text .= "    :Gitlgo               : show git log graph, with options and decorate oneline.\n"
     let l:text .= "    :Gitrl                : show git reference log.\n"
     "let l:text .= "    :Gitlr [NUM]          : show git log for the required commit.\n"
     "let l:text .= "    :Gitlf FILEPATH       : show file log.\n"
@@ -512,6 +513,7 @@ function! gitTools#help#LaunchCommandMenu(...)
 
     let l:cmdList += [ "!== Log commands ==" ]
     let l:cmdList += [ "Gitl      : show git log." ]
+    let l:cmdList += [ "Gitlo     : show git log oneline decorate full." ]
     let l:cmdList += [ "Gitlf     : show git log for current file." ]
     let l:cmdList += [ "Gitlfd    : show git log and diff for current file." ]
     let l:cmdList += [ "Gitlg     : show git log graph." ]

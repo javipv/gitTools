@@ -297,6 +297,7 @@ command! -nargs=*  GitVDA                             call gitTools#vimdiff#Path
 
 " GIT LOG: 
 command! -nargs=?  Gitl                               call gitTools#log#GetHistory(<q-args>)
+command! -nargs=0  Gitlo                              call gitTools#log#GetHistory("--oneline --decorate=full")
 command! -nargs=0  Gitlp                              call gitTools#log#GetHistory("-p -10")
 command! -nargs=1  Gitla                              call gitTools#log#GetHistory("--author <args>")
 command! -nargs=1  GitlS                              call gitTools#log#GetHistory("-S <args>")
@@ -413,6 +414,7 @@ if has("gui_running")
     call gitTools#gitTools#CreateMenus('cn' , '.&Branch'       , ':Gitsw'   , 'Switch branches'                                        , ':Gitsw')
     call gitTools#gitTools#CreateMenus('cn' , '.&Blame'        , ':Gitbl'   , 'Get file blame'                                         , ':Gitbl')
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitl'    , 'Show git log'                                           , ':Gitl [OPT]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlo'   , 'Show git log oneline decorate full'                     , ':Gitlo')
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlf'   , 'Show git log from current file'                         , ':Gitl')
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlfd'  , 'Show git log and diff from current file'                , ':Gitl')
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlp'   , 'Show git log and patch, last 10 commits'                , ':Gitlp')
