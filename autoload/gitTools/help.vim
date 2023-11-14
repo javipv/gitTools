@@ -167,7 +167,6 @@ function! gitTools#help#Help()
     let l:text .= "    :Gitsta               : show status files (show all symbols).\n"
     let l:text .= "    :Gitstf               : show current file status.\n"
     let l:text .= "    :Gitstd               : show current directory status.\n"
-    let l:text .= "    :Gitsth               : show the git status symbols' help.\n"
     let l:text .= "\n"
     let l:text .= "- Short Status:\n"
     let l:text .= "    :GitSt                : show file's status (conceal symbols: X and ?).\n"
@@ -208,6 +207,7 @@ function! gitTools#help#Help()
     let l:text .= "\n"
     let l:text .= "- Stash:\n"
     let l:text .= "    :Gitsth [NUM]         : show stash list, if NUM (0, 1 ....) is set show stash diff.\n"
+    let l:text .= "    :Gitsthl              : show stash list menu, select stash to show stash diff.\n"
     let l:text .= "    :Gitsthmv [COMMENT]   : save to stash, move staged files to the stash.\n"
     let l:text .= "    :Gitsthcp [COMMENT]   : save to stash, copy staged files to the stash and keep local files.\n"
     let l:text .= "    :Gitstha [NUM]        : apply changes from stash.\n"
@@ -567,7 +567,7 @@ function! gitTools#help#LaunchCommandMenu(...)
 
     let l:cmdList += [ "!== Stash commands ==" ]
     let l:cmdList += [ "Gitsth    : show stash list, if NUM (0, 1 ....) is set show stash diff." ]
-    let l:cmdList += [ "Gitsth    : show the git status symbols' help." ]
+    let l:cmdList += [ "Gitsthl   : show stash list menu, select to show stash diff." ]
     let l:cmdList += [ "Gitstha   : apply changes from stash." ]
     let l:cmdList += [ "Gitsthcp  : save to stash, copy staged files to the stash and keep local files." ]
     let l:cmdList += [ "Gitsthd   : delete stash entry." ]

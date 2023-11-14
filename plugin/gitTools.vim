@@ -225,6 +225,7 @@ command! -nargs=0  GitSth                             call gitTools#help#StatusH
 
 " GIT STASH: 
 command! -nargs=?  Gitsth                             call gitTools#stash#Show("<args>")
+command! -nargs=0  Gitsthl                            call gitTools#stash#List()
 command! -nargs=?  Gitsthmv                           call gitTools#stash#Save("", "<args>")
 command! -nargs=?  Gitsthcp                           call gitTools#stash#Save("-k ", "<args>")
 command! -nargs=*  Gitstha                            call gitTools#stash#Apply(<args>)
@@ -471,7 +472,8 @@ if has("gui_running")
     call gitTools#gitTools#CreateMenus('cn' , '.&Status'       , ':Gitrm'   , 'Remove file/dir'                                        , ':Gitrm [FILEPATH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Status'       , ':Gitmv'   , 'Move file/dir'                                          , ':Gitmv [FILEPATH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Status'       , ':GitRM'   , 'Remove file/dir from disk'                              , ':GitRM [FILEPATH]')
-    call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitsth'   , 'Show git stash list/diff'                               , ':Gitsh [NUM]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitsth'   , 'Show git stash list/diff'                               , ':Gitsth [NUM]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitsthl'  , 'Show git stash list menu'                               , ':Gitsthl')
     call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitsthmv' , 'Show git stash save'                                    , ':Gitsthmv [COMMENT]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitsthcp' , 'Show git stash save'                                    , ':Gitsthcp [COMMENT]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Stash'        , ':Gitstha'  , 'Show git stash apply'                                   , ':Gitstha [NUM]')
