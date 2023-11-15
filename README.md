@@ -25,6 +25,6 @@ For instance:
 
 - ":Git" show all commands.
 
-It is advisable to install hi.vim (https://github.com/javipv/hi.vim) to display results colorized.
+It is advisable to install [hi.vim](https://github.com/javipv/hi.vim) plugin to display results colorized.
 
-Previously on https://www.vim.org/scripts/script.php?script_id=6013
+Previously on [vim.ort/gitTools](https://www.vim.org/scripts/script.php?script_id=6013)
