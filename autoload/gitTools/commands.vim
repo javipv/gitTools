@@ -86,8 +86,8 @@ function! gitTools#commands#Add(filepath) range
         echo "[gitTools.vim] ".l:n." paths added."
     endif
 
-    if len(l:linesList) > 0 && l:n > 0
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+    if len(l:linesList) > 0 && l:n > 0 && expand("%") =~ "_gitStatus_"
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)
@@ -142,6 +142,8 @@ function! gitTools#commands#Unstage(filepath) range
     endif
 
     let l:n = 0
+    let l:allResults = ""
+
     for l:line in l:linesList
         if a:filepath == "" && s:isGitFileStatusLine(l:line) == 0
             let l:mssg = "WARNING: not a status line: '".l:line."'. Status tags expected (new file/modified/deleted/unmerged...)"
@@ -154,29 +156,34 @@ function! gitTools#commands#Unstage(filepath) range
             if s:isGitStatusReservedWord(l:filepath) == 1 | continue | endif
 
             if filereadable(l:filepath)
-                call system("git restore --staged  ".l:filepath)
-                echo l:header."git restore --staged ".l:filepath."... done"
-                let l:n += 1
+                let l:result = system(g:gitTools_cmd_unstage.l:filepath)
             elseif isdirectory(l:filepath)
                 call confirm("Confirm to unstage directory: ".l:filepath)
-                call system("git restore --staged  ".l:filepath)
-                echo l:header."git restore --staged ".l:filepath."... done"
-                let l:n += 1
+                let l:result = system(g:gitTools_cmd_unstage.l:filepath)
             else
                 call gitTools#tools#Warn("WARNING: '".l:filepath."' path not found.")
-                call system("git restore --staged  ".l:filepath)
-                echo l:header."git restore --staged ".l:filepath."... "
+                let l:result = system(g:gitTools_cmd_unstage.l:filepath)
+            endif
+
+            if  l:result =~ "error" || l:result =~ "fail" || l:result =~ "help"
+                echo l:header.g:gitTools_cmd_unstage.l:filepath."... failed"
+            else
+                echo l:header.g:gitTools_cmd_unstage.l:filepath."... done"
                 let l:n += 1
             endif
+
+            let l:allResults .= "----------------------------------\n"
+            let l:allResults .= g:gitTools_cmd_unstage.l:filepath."\n"
+            let l:allResults .= l:result
         endfor
     endfor
 
-    if len(l:linesList) > 1
-        echo "[gitTools.vim] ".l:n." paths unstaged."
-    endif
+    redraw
+    echo l:header." ".l:n." paths unstaged."
+    echo l:allResults
 
-    if len(l:linesList) > 0 && l:n > 0
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+    if l:n > 0 && expand("%") =~ "_gitStatus_"
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)
@@ -289,8 +296,8 @@ function! gitTools#commands#Restore(filepath) range
         echo "[gitTools.vim] ".l:n." paths restored."
     endif
 
-    if len(l:linesList) > 0 && l:n > 0
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+    if len(l:linesList) > 0 && l:n > 0 && expand("%") =~ "_gitStatus_"
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)
@@ -389,8 +396,8 @@ function! gitTools#commands#Remove(filepath) range
         echo "[gitTools.vim] ".l:n." paths removed."
     endif
 
-    if len(l:linesList) > 0 && l:n > 0
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+    if len(l:linesList) > 0 && l:n > 0 && expand("%") =~ "_gitStatus_"
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)
@@ -526,7 +533,7 @@ function! gitTools#commands#DiskRemove(filepath) range
         redraw
         echo "[gitTools.vim] ".l:n." paths removed."
 
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)
@@ -595,7 +602,7 @@ function! gitTools#commands#Move(...)
     endfor
 
     if l:n > 0
-        if confirm("Update git status?", "&yes\n&no", 2) != 2
+        if confirm("Update git status?", "&yes\n&no", 1) != 2
             call gitTools#status#GetStatus(getcwd(), "")
             " Restore window position
             call winrestview(l:winview)

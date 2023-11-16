@@ -182,6 +182,8 @@ let g:gitTools_menu_headerColor          = get(g:, 'gitTools_menu_headerColor', 
 let g:gitTools_menu_defaultLineColor     = get(g:, 'gitTools_menu_defaultLineColor', "y8")
 let g:gitTools_menu_highlightDefaultLine = get(g:, 'gitTools_menu_highlightDefaultLine', "")
 
+let g:gitTools_cmd_unstage        = get(g:, 'gitTools_cmd_unstage', "git restore --staged ")
+
 
 "- commands -------------------------------------------------------------------
 

@@ -60,6 +60,13 @@ function! gitTools#status#GetStatusEnd(path, options, command, resfile)
         return
     endif
 
+    for l:line in l:fileList
+        if l:line  =~ "git reset HEAD <file>"
+            " Old git version no git restore avilable.
+            let g:gitTools_cmd_unstage = "git reset HEAD " 
+        endif
+    endfor
+
     if expand("%s") =~ "_gitStatus___" && getline(2) =~ "gitTools.vim" && getline(2) =~ "git status"
         " Current buffer already shows git status
         let w:winSize = winheight(0)
