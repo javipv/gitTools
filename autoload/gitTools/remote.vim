@@ -92,11 +92,6 @@ endfunction
 function! gitTools#remote#PushToBranch(remote)
     redraw
 
-    if a:remote == ""
-        call gitTools#tools#Error("[gitTools.vim] Git push failed. No remote branch.")
-        return
-    endif
-
     let s:lastBranch = a:remote
     let s:lastGitPushBranch = a:remote
     let g:gitTools_lastRemoteBranch = a:remote
@@ -306,16 +301,10 @@ endfunction
 function! gitTools#remote#PullFromBranch(branch)
     redraw
 
-    if a:branch == ""
-        call gitTools#tools#Error("[gitTools.vim] No remote branch selected")
-        return
-    endif
-
     let s:lastGitPullBranch = a:branch
     let g:gitTools_lastRemoteBranch = a:branch
     let g:gitTools_lastBranch = a:branch
 
-    "let l:thisBranch = gitTools#info#GetCurrentBranch()
     let l:thisBranch = gitTools#branch#Current()
     let l:thisBranch = gitTools#branch#Current()
     if l:thisBranch == "" | return | endif
@@ -325,11 +314,10 @@ function! gitTools#remote#PullFromBranch(branch)
         return
     endif
 
-    "let l:cmd = g:gitTools_gitCmd." pull ".a:branch." ".l:thisBranch
     let l:cmd = g:gitTools_gitCmd." pull ".g:gitTools_origin." ".a:branch
     echo l:cmd
 
-    if confirm("Perform git pull from branch: ".a:branch." to ".l:thisBranch, "&yes\n&no", 2) != 1
+    if confirm("Perform git pull from branch: '".a:branch."' to '".l:thisBranch."'", "&yes\n&no", 2) != 1
         return
     endif
 
@@ -484,7 +472,7 @@ function! gitTools#remote#Origin(options, ...)
         let l:remote = a:1
     endif
 
-    if l:remote != ""
+    if l:remote != "" && len(l:remotesList) > 1
         if l:remotesStr !~ l:remote
             call gitTools#tools#Error("[gitTools.vim] Unknown remote: ".l:remote)
             return
