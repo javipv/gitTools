@@ -380,6 +380,11 @@ command! -nargs=?  Gitreset                           call gitTools#reset#GitRes
 command! -nargs=?  Gitresetm                          call gitTools#reset#GitReset("medium","<args>")
 command! -nargs=?  Gitreseth                          call gitTools#reset#GitReset("hard","<args>")
 
+" GIT TAG:
+command! -nargs=*  Gitt                               call gitTools#tag#Tag("", <f-args>)
+command! -nargs=*  Gitta                              call gitTools#tag#Add("", <f-args>)
+command! -nargs=*  Gittd                              call gitTools#tag#Delete("", <f-args>)
+
 " Other:
 command! -nargs=0  Gith                               call gitTools#help#Help()
 command! -nargs=?  Git                                call gitTools#help#LaunchCommandMenu("<args>")
@@ -504,6 +509,9 @@ if has("gui_running")
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitreset' , 'Reset soft'                                             , ':Gitreset [HASH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitresetm', 'Reset medium'                                           , ':Gitresetm [HASH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitreseth', 'Reset hard'                                             , ':Gitreseth [HASH]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gitt'     , 'Show tags matching pattern'                                              , ':Gitt [PATTERN]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gitta'    , 'Add new tag'                                            , ':Gitta [NAME] [HASH]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittd'    , 'Delete tag'                                            , ':Gittd [NAME]')
     "call gitTools#gitTools#CreateMenus('cn' , '.&FileCompare'  , ':Vdf'     , 'Compare [current] file with same one on different dir'  , ':Vdf [PATH1] PATH2')
     "call gitTools#gitTools#CreateMenus('cn' , '.&FileCompare'  , ':Vdd'     , 'Compare all files between directories'                  , ':Vdd [PATH1] PATH2 [FLAGS]')
     "call gitTools#gitTools#CreateMenus('cn' , ''               , ':Gitpwd'  , 'Set git user and password'                              , ':Gitpwd')

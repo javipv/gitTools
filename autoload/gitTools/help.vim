@@ -217,6 +217,11 @@ function! gitTools#help#Help()
     let l:text .= "    :Gitstha [NUM]        : apply changes from stash.\n"
     let l:text .= "    :Gitsthd [NUM]        : delete stash entry.\n"
     let l:text .= "\n"
+    let l:text .= "- Tags:\n"
+    let l:text .= "    :Gitt [PATTERN]       : show git tags, if argument provided show tags matching pattern.\n"
+    let l:text .= "    :Gitta [NAME]         : add new tag.\n"
+    let l:text .= "    :Gittd [NAME]         : delete tag.\n"
+    let l:text .= "\n"
     let l:text .= "- Checkout:\n"
     let l:text .= "    :Gitco                : perform checkout from branch.\n"
     let l:text .= "    :Gitcob [NEW_BRANCH]  : perform checkout from branch on new branch.\n"
@@ -580,6 +585,11 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitsthcp  : save to stash, copy staged files to the stash and keep local files." ]
     let l:cmdList += [ "Gitsthd   : delete stash entry." ]
     let l:cmdList += [ "Gitsthmv  : save to stash, move staged files to the stash." ]
+
+    let l:cmdList += [ "!== Tag commands ==" ]
+    let l:cmdList += [ "Gitt      : show git tags on menu." ]
+    let l:cmdList += [ "Gitta     : add new tag." ]
+    let l:cmdList += [ "Gittd     : delete tag." ]
 
     let l:cmdList += [ "!== Blame commands == " ]
     let l:cmdList += [ "Gitbl     : get blame of current file." ]
