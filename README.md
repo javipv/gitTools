@@ -16,14 +16,20 @@ Use ":Git PATTERN1 PATTERN2", with arguments, to show the commands matching the 
 Then you can select on the menu window the command you want to launch..
 
 For instance:
+```vimscript
 
-- ":Git merge" to show all commands and descriptions matching "merge".
+" Show all commands and descriptions matching "merge".
+:Git merge
 
-- ":Git commit" to show all commands and descriptions matching "commit".
+" Show all commands and descriptions matching "commit".
+:Git commit
 
-- ":Git branch merge" to show all commands and descriptions matching "branch" and "merge".
+" Show all commands and descriptions matching "branch" and "merge".
+:Git branch merge
 
-- ":Git" show all commands.
+" Show all commands.
+:Git
+```
 
 It is advisable to install [hi.vim](https://github.com/javipv/hi.vim) plugin to display results colorized.
 
