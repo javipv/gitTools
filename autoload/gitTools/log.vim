@@ -627,3 +627,116 @@ function! gitTools#log#Graph(options)
     endif
 endfunction
 
+
+"=================================================================================
+" GIT LOG -L
+"=================================================================================
+
+" Show git log search function name.
+" Arg1: [funcname], function name to search.
+" Arg2: [file], file where searching the text.
+" Cmd: gitL
+function! gitTools#log#FunctionSearch(...)
+    let l:res = gitTools#tools#isGitAvailable()
+    if l:res != 1
+        call gitTools#tools#Error("ERROR: ".l:res)
+        return
+    endif
+
+    let l:file = ""
+    let l:funcname = ""
+
+    if len(a:000) >= 1
+        let l:funcname = gitTools#tools#TrimString(a:1)
+    endif
+
+    if len(a:000) >= 2
+        let l:file = gitTools#tools#TrimString(a:2)
+    endif
+
+    if l:funcname == ""
+        "let l:funcname = input("[gitTools.vim] Search changes of: ")
+        let l:funcname = expand("<cword>")
+        redraw
+        if confirm("[gitTools.vim] Search changes of: '".l:funcname."'?", "&yes\n&no", 1) == 2
+            redraw
+            let l:funcname = input("[gitTools.vim] Search changes of: ")
+        endif
+    endif
+
+    if l:funcname == ""
+        call gitTools#tools#Error("ERROR: empty funcname.")
+        return
+    endif
+
+    if l:file == ""
+        let l:file = expand("%f")
+        redraw
+        if confirm("[gitTools.vim] Search changes of: '".l:funcname."', search file: '".l:file."'?", "&yes\n&no", 1) == 2
+            redraw
+            let l:file = input("[gitTools.vim] Search changes of: '".l:funcname."', search file: ")
+        endif
+    endif
+
+    if l:file == ""
+        call gitTools#tools#Error("ERROR: empty file.")
+        return
+    endif
+
+    let l:date     = strftime("%y%m%d_%H%M")
+    let l:name     = "_".l:date."_gitLogL___".l:funcname."__".l:file.".log"
+    let l:command  = g:gitTools_gitCmd." log -L:".l:funcname.":".l:file
+    let l:callback = ["gitTools#log#GitLogFunctionSearchEnd", l:name, l:command]
+
+    redraw
+    echo l:command
+    call gitTools#tools#WindowSplitMenu(3)
+    call gitTools#tools#SystemCmd(l:command, l:callback, 1)
+endfunction
+
+
+function! gitTools#log#GitLogFunctionSearchEnd(name, cmd, resfile)
+    if !exists('a:resfile') || empty(glob(a:resfile)) 
+        call gitTools#tools#Warn("Git log search empty")
+        return
+    endif
+
+    let fileList = readfile(a:resfile)
+
+    if l:fileList[0]  =~ "fatal: not a git repository"
+        call gitTools#tools#Error("ERROR: not a git repository")
+        return
+    endif
+
+    call gitTools#tools#WindowSplit()
+
+    " Rename buffer
+    silent! exec("0file")
+    silent! exec("bd! ".a:name)
+    silent! exec("file! ".a:name)
+
+    " Add header
+    let l:textList = [ " [gitTools.vim] ".a:cmd ]
+    let l:header = gitTools#tools#EncloseOnRectangle(l:textList, "bold", "")
+    silent put=l:header
+
+    " Add the log info
+    silent put =  readfile(a:resfile)
+    normal ggdd
+
+    call delete(a:resfile)
+    call gitTools#tools#WindowSplitEnd()
+    redraw
+    set ft=diff
+
+    call s:SetSyntaxAndHighlighting("")
+
+    " Set buffer parameters
+    setl noswapfile
+    setl nomodifiable
+    setl buflisted
+    setl bufhidden=delete
+    setl buftype=nofile
+    setl nonu
+endfunction
+

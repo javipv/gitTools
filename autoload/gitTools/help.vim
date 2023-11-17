@@ -196,6 +196,7 @@ function! gitTools#help#Help()
     let l:text .= "    :Gitlg [OPTIONS]      : show git log graph.\n"
     let l:text .= "    :Gitlgo               : show git log graph, with options and decorate oneline.\n"
     let l:text .= "    :Gitrl                : show git reference log.\n"
+    let l:text .= "    :GitL [FUNCNAME] [FILE] : search function name changes history.\n"
     "let l:text .= "    :Gitlr [NUM]          : show git log for the required commit.\n"
     "let l:text .= "    :Gitlf FILEPATH       : show file log.\n"
     "let l:text .= "    :Gitlr [NUM]          : when placed on a git log file, get the log and diff of each revison.\n"
@@ -523,6 +524,7 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitlgo    : show git log graph, decorate oneline." ]
     let l:cmdList += [ "Gitlp     : show git log and patch for the last 10 commits." ]
     let l:cmdList += [ "Gitrl     : show git reference log." ]
+    let l:cmdList += [ "GitL     : search function name changes history." ]
 
     let l:cmdList += [ "!== Grep commands ==" ]
     let l:cmdList += [ "Gitg      : grep pattern on the repository." ]
