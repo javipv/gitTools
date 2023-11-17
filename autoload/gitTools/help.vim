@@ -219,8 +219,11 @@ function! gitTools#help#Help()
     let l:text .= "\n"
     let l:text .= "- Tags:\n"
     let l:text .= "    :Gitt [PATTERN]       : show git tags, if argument provided show tags matching pattern.\n"
+    let l:text .= "    :Gittm [PATTERN]      : show git tags menu, if argument provided show tags matching pattern.\n"
     let l:text .= "    :Gitta [NAME]         : add new tag.\n"
     let l:text .= "    :Gittd [NAME]         : delete tag.\n"
+    let l:text .= "    :Gittpush [TAG]       : push tags.\n"
+    let l:text .= "    :Gittpushd [TAG]      : delete tag on remote.\n"
     let l:text .= "\n"
     let l:text .= "- Checkout:\n"
     let l:text .= "    :Gitco                : perform checkout from branch.\n"
@@ -587,9 +590,12 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitsthmv  : save to stash, move staged files to the stash." ]
 
     let l:cmdList += [ "!== Tag commands ==" ]
-    let l:cmdList += [ "Gitt      : show git tags on menu." ]
+    let l:cmdList += [ "Gitt      : show git tags on buffer." ]
+    let l:cmdList += [ "Gittm     : show git tags on menu." ]
     let l:cmdList += [ "Gitta     : add new tag." ]
     let l:cmdList += [ "Gittd     : delete tag." ]
+    let l:cmdList += [ "Gittpush  : push tags." ]
+    let l:cmdList += [ "Gittpushd : delete tag on remote." ]
 
     let l:cmdList += [ "!== Blame commands == " ]
     let l:cmdList += [ "Gitbl     : get blame of current file." ]

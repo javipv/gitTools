@@ -381,9 +381,12 @@ command! -nargs=?  Gitresetm                          call gitTools#reset#GitRes
 command! -nargs=?  Gitreseth                          call gitTools#reset#GitReset("hard","<args>")
 
 " GIT TAG:
-command! -nargs=*  Gitt                               call gitTools#tag#Tag("", <f-args>)
+command! -nargs=*  Gitt                               call gitTools#tag#Show("", <f-args>)
+command! -nargs=*  Gittm                              call gitTools#tag#Menu("", <f-args>)
 command! -nargs=*  Gitta                              call gitTools#tag#Add("", <f-args>)
 command! -nargs=*  Gittd                              call gitTools#tag#Delete("", <f-args>)
+command! -nargs=*  Gittpush                           call gitTools#tag#Push("", <f-args>)
+command! -nargs=*  Gittpushd                          call gitTools#tag#Push("--delete", <f-args>)
 
 " Other:
 command! -nargs=0  Gith                               call gitTools#help#Help()
@@ -509,9 +512,12 @@ if has("gui_running")
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitreset' , 'Reset soft'                                             , ':Gitreset [HASH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitresetm', 'Reset medium'                                           , ':Gitresetm [HASH]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Reset'        , ':Gitreseth', 'Reset hard'                                             , ':Gitreseth [HASH]')
-    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gitt'     , 'Show tags matching pattern'                                              , ':Gitt [PATTERN]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gitt'     , 'Show tags matching pattern on buffer'                   , ':Gitt [PATTERN]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittm'    , 'Show tags matching pattern on menu'                     , ':Gittm [PATTERN]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gitta'    , 'Add new tag'                                            , ':Gitta [NAME] [HASH]')
-    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittd'    , 'Delete tag'                                            , ':Gittd [NAME]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittd'    , 'Delete tag'                                             , ':Gittpush [TAG]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittpush' , 'Push tag'                                               , ':Gitpushd [TAG]')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Tag'          , ':Gittpushd', 'Delete remote tag'                                            , ':Gittd [NAME]')
     "call gitTools#gitTools#CreateMenus('cn' , '.&FileCompare'  , ':Vdf'     , 'Compare [current] file with same one on different dir'  , ':Vdf [PATH1] PATH2')
     "call gitTools#gitTools#CreateMenus('cn' , '.&FileCompare'  , ':Vdd'     , 'Compare all files between directories'                  , ':Vdd [PATH1] PATH2 [FLAGS]')
     "call gitTools#gitTools#CreateMenus('cn' , ''               , ':Gitpwd'  , 'Set git user and password'                              , ':Gitpwd')

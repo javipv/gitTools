@@ -48,7 +48,7 @@ function! gitTools#gitTools#Reload()
     let l:cmd .= " | so ".s:plugin_path."/status.vim"
     let l:cmd .= " | so ".s:plugin_path."/stash.vim"
     let l:cmd .= " | so ".s:plugin_path."/reset.vim"
-    let l:cmd .= " | so ".s:plugin_path."/tag.vim"
+    let l:cmd .= " | so ".s:plugin_path."/tagvim"
     let l:cmd .= " | so ".s:plugin_path."/tools.vim"
     let l:cmd .= " | so ".s:plugin_path."/utils.vim"
     let l:cmd .= " | so ".s:plugin_path."/vimdiff.vim"
