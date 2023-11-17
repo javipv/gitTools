@@ -201,6 +201,9 @@ function! gitTools#help#Help()
     "let l:text .= "    :Gitlr [NUM]          : when placed on a git log file, get the log and diff of each revison.\n"
     "let l:text .= "                           NUM: given a number, only first number of changes will be get.\n"
     let l:text .= "\n"
+    let l:text .= "- Grep:\n"
+    let l:text .= "    :Gitg [PATTERN]       : print repository lines matching the pattern.\n"
+    let l:text .= "\n"
     let l:text .= "- Show-ref:\n"
     let l:text .= "    :Gitsr ARGS           : call git show-ref ARGS.\n"
     let l:text .= "    :Gitsrt               : call git show-ref --tags to show all tags.\n"
@@ -520,6 +523,9 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitlgo    : show git log graph, decorate oneline." ]
     let l:cmdList += [ "Gitlp     : show git log and patch for the last 10 commits." ]
     let l:cmdList += [ "Gitrl     : show git reference log." ]
+
+    let l:cmdList += [ "!== Grep commands ==" ]
+    let l:cmdList += [ "Gitg      : grep pattern on the repository." ]
 
     let l:cmdList += [ "!== Merge branch commands ==" ]
     let l:cmdList += [ "Gitmb     : merge branch." ]

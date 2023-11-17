@@ -311,6 +311,9 @@ command! -nargs=?  Gitlg                              call gitTools#log#Graph(<q
 command! -nargs=?  Gitlgo                             call gitTools#log#Graph("--decorate --oneline")
 command! -nargs=?  Gitrl                              call gitTools#log#GetRefLog(<q-args>)
 
+" GIT GREP: 
+command! -nargs=?  Gitg                               call gitTools#grep#Grep("-n",<q-args>)
+
 " Pending: adapt for git.
 "command! -nargs=?  Gitlr                              call gitTools#log#GetRevDiff("<args>")
 
@@ -428,6 +431,7 @@ if has("gui_running")
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlgo'  , 'Show git log graph, one line'                           , ':Gitlgo')
     call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitrl'   , 'Show git reference log'                                 , ':Gitrl')
     "call gitTools#gitTools#CreateMenus('cn' , '.&Log'          , ':Gitlr'   , 'On git log file, get each revision diff'                , ':Gitlr')
+    call gitTools#gitTools#CreateMenus('cn' , '.&Grep'         , ':Gitg'    , 'Print lines matching the pattern'                       , ':Gitg [PATTERN]')
     call gitTools#gitTools#CreateMenus('cn' , '.&Show-ref'     , ':Gitsr'   , 'Call git show-ref ARG'                                  , ':Gitsr ARGS')
     call gitTools#gitTools#CreateMenus('cn' , '.&Show-ref'     , ':Gitsrt'  , 'Show all tags. git show-ref --tags'                     , ':Gitsrt')
     call gitTools#gitTools#CreateMenus('cn' , '.&Diff'         , ':Gitd'    , 'Get file/path diff'                                     , ':Gitd PATH')

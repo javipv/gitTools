@@ -3,7 +3,7 @@ Vim plugin to perform multiple git commands from within vim.
 
 This plugin allows to perform multiple git commands from within vim and show the results.
 
-You will be able to perferom the basic git commands like, checkout, commit, push, pull, merge, cherry-pick, show-ref, log, navigate through branches and display diffs and vimdiffs on changes.
+You will be able to perform the basic git commands like, checkout, commit, push, pull, merge, cherry-pick, show-ref, log, navigate through branches and display diffs and vimdiffs on changes.
 
 This is a port of plugin svnTools, modified to use git instead of svn.
 
