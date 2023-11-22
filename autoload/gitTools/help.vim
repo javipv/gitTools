@@ -186,7 +186,7 @@ function! gitTools#help#Help()
     let l:text .= "\n"
     let l:text .= "- Log:\n"
     let l:text .= "    :Gitl [OPTIONS]       : show git log.\n"
-    let l:text .= "    :Gitl                 : show git log with options oneline and decorate full.\n"
+    let l:text .= "    :Gitlo                : show git log with options oneline and decorate full.\n"
     let l:text .= "    :Gitlf                : show git log for current file.\n"
     let l:text .= "    :Gitlfd               : show git log and diff for current file.\n"
     let l:text .= "    :Gitlp                : show git log and patch for the last 10 commits.\n"
