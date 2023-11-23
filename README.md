@@ -44,25 +44,42 @@ For instance:
 :Git
 ```
 
-## Usage simple example:
+## Basic usage example:
 
 Do some changes on several files.
 
-### Checkk Git status (Gitst or Gitsta), and perform Gita on the files not staged:
+You can use Gitda (open a buffer displaying the diff for all chages) or Gitvda (open a vimdiff tab for each file) to check the changes.
 
-![Gitsta](Gitsta.png?raw=true ":Gitsta")
+### Check Git status (Gitst or Gitsta), and perform Gita on the files not staged:
 
-### Use Gitcm to open the commit message window (left) and modifications window (right):
+As the header says you can position the cursor on a line with a file name and launch:
+- ":Gita" to add the file to the stage area.
+- ":Gitu" to unstage the file.
+- ":GitR" to restore the file and remove the changes.
+- And several more...
+
+![Gitst](Gitsta.png?raw=true ":Gitst")
+
+### Use Gitcm to start a commit:
+
+This will open a window (left) to edit the commit message and ask the user if he wants to open another window (here on the right) to show the staged modifications' diff:
 
 ![Gitcm](Gitcm.png?raw=true ":Gitcm")
 
-### Use Gitcm again to perform de commit:
+### Gitcm again to commit the changes:
+
+A new window window will open to show the commit results.
+
+Use :Gitcm again on the .git/COMMIT_EDITMS window to finally perform de commit.
 
 ![Gitcm done](Gitcm_done.png?raw=true ":Git done")
 
 ### Use Gitpush to push changes to remote:
 
+A new window window will open to show the commit results.
+
 ![Gitpush](Gitpush.png?raw=true ":Gitpush")
+
 
 ### Use Gitbl to check the blame:
 
@@ -76,6 +93,6 @@ Do some changes on several files.
 
 ### Use Gitrl to check the reference log:
 
-![Gitrl](Gitr.png?raw=true ":Gitrl")
+![Gitrl](Gitrl.png?raw=true ":Gitrl")
 
 
