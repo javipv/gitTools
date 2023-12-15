@@ -600,6 +600,8 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "!== Blame commands == " ]
     let l:cmdList += [ "Gitbl     : get blame of current file." ]
 
+    let l:searchStr = ""
+
     " Filter commands to be displayed:
     if l:filter != ""
         " Pick only lines matching the selected filter words.
@@ -614,8 +616,6 @@ function! gitTools#help#LaunchCommandMenu(...)
         endfor
 
         " Search the filter words on screen.
-        let l:searchStr = ""
-
         for l:filt in split(l:filter)
             if l:searchStr != ""
                 let l:searchStr .= "\\\|"

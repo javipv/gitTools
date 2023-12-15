@@ -133,8 +133,10 @@ function! gitTools#menu#OpenMenu(headerList, optionsList, callbackFunction, sele
     silent! exec '0file | file _gitTools_menu_'
 
     " Move window to bottom
-    if s:gitToolsMenuDefaultWindowPos == ""
-        wincmd J
+    if s:gitToolsMenuDefaultWindowPos != ""
+        if w:split == "1" || w:split == "horizontal"
+            wincmd J
+        endif
     endif
 
     "----------------------------------
