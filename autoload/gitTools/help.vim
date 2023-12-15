@@ -474,7 +474,7 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitsta    : show status files (show all symbols)." ]
     let l:cmdList += [ "Gitstd    : show current directory status." ]
     let l:cmdList += [ "Gitstf    : show current file status." ]
-    let l:cmdList += [ "!====" ]
+    let l:cmdList += [ "!==" ]
     let l:cmdList += [ "GitSt     : show file's status (conceal symbols: X and ?)." ]
     let l:cmdList += [ "GitSta    : show status files (show all symbols)." ]
     let l:cmdList += [ "GitStd    : show current directory status." ]
@@ -564,12 +564,12 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "Gitsr     : show references." ]
     let l:cmdList += [ "Gitsrt    : show all tags." ]
 
-    let l:cmdList += [ "!== Reset commands ==" ]
+    let l:cmdList += [ "== Reset commands ==" ]
     let l:cmdList += [ "Gitreset  : soft reset." ]
     let l:cmdList += [ "Gitreseth : hard reset." ]
     let l:cmdList += [ "Gitresetm : medium reset." ]
 
-    let l:cmdList += [ "!== Revision (hash) commands ==" ]
+    let l:cmdList += [ "== Revision (hash) commands ==" ]
     let l:cmdList += [ "Gitr      : get diff of selected hash/revision number." ]
     let l:cmdList += [ "Gitrsh    : show the file on the requested hash/revision number." ]
 
