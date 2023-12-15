@@ -376,7 +376,7 @@ function! gitTools#log#GetLogAndDiff(hash)
     endif
 
     " CHeck revision number lenght:
-    let l:revisionLen = 8
+    let l:revisionLen = 7
     if len(l:hash) < l:revisionLen
         call gitTools#tools#Error("Wrong revision number lenght ".l:hash." (expected lenght >= ".l:revisionLen.")")
         return

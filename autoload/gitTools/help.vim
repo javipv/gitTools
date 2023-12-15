@@ -480,7 +480,7 @@ function! gitTools#help#LaunchCommandMenu(...)
     let l:cmdList += [ "GitStd    : show current directory status." ]
     let l:cmdList += [ "GitStf    : show current file status." ]
     let l:cmdList += [ "GitSth    : show the git status symbols' help." ]
-    let l:cmdList += [ "!== Status action commands == " ]
+    let l:cmdList += [ "!== Status screen action commands == " ]
     let l:cmdList += [ "Gita      : git status. Add file to git stage." ]
     let l:cmdList += [ "Gitmv     : git status. Move file/dir path." ]
     let l:cmdList += [ "Gitrm     : git status. Remove file/dir from repository." ]
@@ -602,6 +602,7 @@ function! gitTools#help#LaunchCommandMenu(...)
 
     " Filter commands to be displayed:
     if l:filter != ""
+        " Pick only lines matching the selected filter words.
         let l:cmdFilterList = []
 
         for l:cmd in l:cmdList
@@ -610,6 +611,16 @@ function! gitTools#help#LaunchCommandMenu(...)
                     let l:cmdFilterList += [ l:cmd ]
                 endif
             endfor
+        endfor
+
+        " Search the filter words on screen.
+        let l:searchStr = ""
+
+        for l:filt in split(l:filter)
+            if l:searchStr != ""
+                let l:searchStr .= "\\\|"
+            endif
+            let l:searchStr .= l:filt
         endfor
     else
         let l:cmdFilterList = l:cmdList
@@ -622,6 +633,21 @@ function! gitTools#help#LaunchCommandMenu(...)
     call gitTools#menu#AddCommentLineColor("!", "w4*")
     call gitTools#menu#ShowLineNumbers("no")
     call gitTools#menu#OpenMenu(l:header, l:cmdFilterList, l:callback, "")
+
+    " Use Search command to highlight the filter strings.
+    if l:searchStr != ""
+        let @/ = l:searchStr
+        execute "normal /\<cr>"
+
+        let l:n = 0
+        " search(pattern, W:do not wrap to the start, 0:end line not set, 200msec timeout).
+        while search(l:searchStr, 'W', 0, 200) != 0
+            let l:n += 1
+        endwhile
+        silent! normal ggn
+        redraw
+        echo "[gitTools.vim] Git ".l:filter.". Found ".l:n." matches."
+    endif
 endfunction
 
 
